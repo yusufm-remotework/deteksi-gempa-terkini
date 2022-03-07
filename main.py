@@ -1,5 +1,6 @@
 """
 Aplikasi deteksi gempa terkini
+MODULARISASI DENGAN FUNCTION
 """
 
 
@@ -23,7 +24,6 @@ def ekstraksi_data():
     hasil['pusat gempa'] = '67 km Tenggara TAHUNA-KEP.SANGIHE-SULUT'
     hasil['keterangan'] = 'tidak berpotensi TSUNAMI'
 
-
     print(hasil)
     return hasil
 
@@ -34,10 +34,9 @@ def tampilkan_data(result):
     print(f"jam {result['jam']}")
     print(f"skala {result['skala']}")
     print(f"kedalaman {result['kedalaman']}")
-    print(f"lokasi {result['lokasi']}")
+    print(f"lokasi: LU={result['lokasi']['lu']}, BT={result['lokasi']['bt']}")
     print(f"pusat gempa {result['pusat gempa']}")
     print(f"keterangan {result['keterangan']}")
-
 
     pass
 
