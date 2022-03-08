@@ -24,22 +24,44 @@ def ekstraksi_data():
         tanggal = result[0]
         waktu = result[1]
 
-        result= soup.find('span',{'class' : 'ic magnitude'})
-        magnitude = result.text
+        result= soup.find('div',{'class': 'col-md-6 col-xs-6 gempabumi-detail no-padding'})
+        result = result.findChildren('li')
+        i = 0
+        magnitudo = None
+        kedalaman = None
+        ls = None
+        bt = None
+        lokasi = None
+        dirasakan = None
+
+        for res in result:
+            print(i, res)
+            if i == 1:
+                magnitudo = res.text
+            elif i == 2:
+                kedalaman = res.text
+            elif i == 3:
+                koordinat = res.text.split(' - ')
+                ls = koordinat[0]
+                bt = koordinat[1]
+            elif i == 4:
+                lokasi = res.text
+            elif i == 5:
+                dirasakan = res.text
+            i = i + 1
 
 
         hasil=dict()
-        hasil['tanggal'] = tanggal #'06 Maret 2022'
-        hasil ['jam'] = waktu #'05:40:28 WIB'
-        hasil['skala'] = 5.0
-        hasil['kedalaman'] = '43 km'
-        hasil['lokasi'] = {'lu' : 3.55,  'bt' : - 126.10}
-        hasil['pusat gempa'] = '67 km Tenggara TAHUNA-KEP.SANGIHE-SULUT'
-        hasil['keterangan'] = 'tidak berpotensi TSUNAMI'
+        hasil['tanggal'] = tanggal
+        hasil ['jam'] = waktu
+        hasil['magnitudo'] = magnitudo
+        hasil['kedalaman'] = kedalaman
+        hasil['koordinat'] = {'ls' : ls,  'bt' : bt}
+        hasil['lokasi'] = lokasi
+        hasil['dirasakan'] = dirasakan
         return hasil
     else:
         return None
-
 
 def tampilkan_data(result):
     if result is None:
@@ -48,11 +70,11 @@ def tampilkan_data(result):
     print('Gempa terakhir berdasarkan BMKG')
     print(f"tanggal {result['tanggal']}")
     print(f"jam {result['jam']}")
-    print(f"skala {result['skala']}")
+    print(f"magnitudo {result['magnitudo']}")
     print(f"kedalaman {result['kedalaman']}")
-    print(f"lokasi: LU={result['lokasi']['lu']}, BT={result['lokasi']['bt']}")
-    print(f"pusat gempa {result['pusat gempa']}")
-    print(f"keterangan {result['keterangan']}")
+    print(f"koordinat: LS={result['koordinat']['ls']}, BT={result['koordinat']['bt']}")
+    print(f"lokasi {result['lokasi']}")
+    print(f"dirasakan {result['dirasakan']}")
 
 #if __name__ == '__main__':
 #    print('ini adalah package gempaterkini')
